@@ -45,10 +45,10 @@ public class Body {
         double accelerationX = this.netForceX / this.mass; // acceleration is calculated as force/mass - mass = kg, force = N, acceleration is m/s^2
         double accelerationY = this.netForceY / this.mass; // this is newton's second law of motion F = ma or force = mass multiplied by acceleration
 
-        this.velocityX = accelerationX * timeStep;
-        this.velocityY = accelerationY * timeStep;
+        this.velocityX += accelerationX * timeStep;
+        this.velocityY += accelerationY * timeStep;
 
-        this.positionX = this.velocityX * timeStep;
-        this.positionY = this.velocityY * timeStep;
+        this.positionX += this.velocityX * timeStep;
+        this.positionY += this.velocityY * timeStep;
     }
 }

@@ -5,11 +5,15 @@ import java.util.ArrayList;
 
 public class GatherData {
     private static final Scanner scanner = new Scanner(System.in);
+    static final double massOfSun = 1.989e30;
+    static final double massOfEarth = 5.972e24;
+    static final double massOfMars = 6.39e23;
 
     /**
      * Method used to choose calculation options
      *
      */
+
     public static void calculationOption() { // I have also used the extract method command in intellij IDE  to create this method. See below for its full details
         boolean stopProgram = false;
         boolean validAnswer = false;
@@ -59,29 +63,35 @@ public class GatherData {
 
 
     private static void nBodyProblem() {
-        System.out.println("The N-body problem, in celestial mechanics, is predicting the motions of N masses under mutual gravitational attraction, given their initial positions, velocities, and masses.");
+        System.out.println("The N-body problem, in celestial mechanics, is predicting the motions of any number of masses (N) under mutual gravitational attraction, given their initial positions, velocities, and masses.");
         System.out.println("""
         Select a simulation, or choose your own:");
-        1: Simple Sun-Earth system
-        2: Sun, Earth, and Mars
-        3: Choose your own simulation.
+        1: Sun and Earth (Two-body)
+        2: Sun, Earth, and Mars (Three-body)
+        3: Choose your own simulation. (N-body)
         """);
+
+        // this line creates a new array list which can only hold the body object which has been defined in our body class
+        ArrayList<Body> celestialBodies = new ArrayList<>();
 
         int presetChoice = scanner.nextInt();
         if (presetChoice == 1) {
+            Body sun = new Body(massOfSun, 0, 0, 0, 0); // initial velocity y for earth is the average speed is 29,780 is m/s
+            Body earth = new Body(massOfEarth, 1.496e11, 0, 0, 29780); // initial x is the average distance from the earth to the sun, which is an astronomical unit (AU)
+            celestialBodies.add(sun); celestialBodies.add(earth);
 
-        } else if (presetChoice == 0) {
+            CalculationEngine.calculateNBodyProblem(celestialBodies, 60, 3600);
+        } else if (presetChoice == 3) {
             System.out.print("Enter the number of bodies (N): ");
             int numberOfBodies = scanner.nextInt();
 
             System.out.print("Enter the simulation time step (Δt): "); // delta t, this determines how much time in seconds that the program should move after each loop
             double timeStep = scanner.nextDouble();
 
-            System.out.print("Enter the total simulation duration (T): ");
-            double totalTime = scanner.nextDouble();
+            System.out.print("Enter the total simulation duration in seconds (S): ");
+            int totalTime = scanner.nextInt();
 
-            // this line creates a new array list which can only hold the body object which has been defined in our body class
-            ArrayList<Body> celestialBodies = new ArrayList<>();
+
 
             System.out.println("Enter data for each body:");
 
@@ -104,6 +114,7 @@ public class GatherData {
                 double velocityY = scanner.nextDouble();
 
                 celestialBodies.add(new Body(mass, positionX, positionY, velocityX, velocityY));
+                CalculationEngine.calculateNBodyProblem(celestialBodies, timeStep, totalTime);
             }
         }
     }
