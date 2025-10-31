@@ -18,31 +18,36 @@ public class CalculationEngine {
     // static just means that the objects or items within that scope are accessible without needing to instantiate a new instance
     // of the class that holds it
     public static void calculateNBodyProblem(ArrayList<Body> celestialBodies, double timeStep, int totalDuration) {
-//        celestialBodies.add(sun);
-//        celestialBodies.add(earth);
-
-
-        for (Body body : celestialBodies) {
-            body.resetForce();
-        }
-
-
-        double massA = bodyOne.mass;
-        double massB = bodyTwo.mass;
 
 
 
+        // time loop for each iteration of the simulation
+        for (double t = 0; t < totalDuration; t += timeStep) {
+            for (Body body : celestialBodies) {
+                body.resetForce();
+            }
 
+            for (int i = 0; i < celestialBodies.size(); i++) {
+                for (int j = i + 1; j < celestialBodies.size(); j++) { // adding one ensures that when running the simulation we don't calculate the same pair twice, so e.g A = B
 
-        for (double time = 0; time < totalDuration; time += timeStep) {
-            for (int j = 0; j < celestialBodies.toArray().length; j++) {
-                System.out.println("pr");
+                    Body bodyA = celestialBodies.get(i);
+                    Body bodyB = celestialBodies.get(j);
+
+                    calculateForcesAndApplyValues(bodyA, bodyB);
+                    System.out.println("Time: " + t + "s\n");
+                    System.out.println("Position: \n " + "X: "+ celestialBodies.get(1).positionX + "\n Y: " + celestialBodies.get(1).positionY);
+                }
+            }
+
+            for (Body body : celestialBodies) {
+                body.updatePositionAndVelocityA(timeStep);
             }
         }
+
     }
 
 
-    public static void calculateAndApplyForces(Body bodyA, Body bodyB) {
+    public static void calculateForcesAndApplyValues(Body bodyA, Body bodyB) {
 
         double distanceX = bodyB.positionX - bodyA.positionX;
         double distanceY = bodyB.positionY - bodyA.positionY;
@@ -53,8 +58,8 @@ public class CalculationEngine {
         double forceY = magnitudeOfForce * (distanceY / totalDistance);
 
         bodyA.updateNetForce(forceX, forceY);
-        bodyB.updateNetForce(-forceX, -forceY); // this saves code and time because we now don't have to calculate the force for the other bbodu
-        // we just know that the force for body
+        bodyB.updateNetForce(-forceX, -forceY); // this saves code and time because we now don't have to calculate the force for the other bod
+        // we just know that the force for body B will directly opposite to A
 
     }
 
