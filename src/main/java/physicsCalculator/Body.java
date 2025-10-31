@@ -1,20 +1,22 @@
 package physicsCalculator;
 
 
+import javax.xml.namespace.QName;
 
 public class Body {
 
-    // this declares the variable we need to use in the N-body formula
+    // this declares the variables we need to use in the N-body formula
+    String name;
     double mass;
     double positionX, positionY;
     double velocityX, velocityY;
     double netForceX, netForceY;
 
     /**
-     * This is a constructor this uses the variables in the class to create a new object
+     * This is a constructor this uses the variables in the class to create a new object that can be used across our programme
      * */
-    public Body(double initial_mass, double initial_x, double initial_y, double initial_vx, double initial_vy) {
-
+    public Body(String name, double initial_mass, double initial_x, double initial_y, double initial_vx, double initial_vy) {
+        this.name = name;
         this.mass = initial_mass;
         this.positionX = initial_x;
         this.positionY = initial_y;
@@ -25,7 +27,7 @@ public class Body {
     }
 
     public void resetForce() {
-        this.netForceX = 0; //used to set force back to zero on each iteration of the loop so we get accurate calculation
+        this.netForceX = 0; //used to set force back to zero on each iteration of the loop so we get accurate calculation because if not then the whole thing blows up :o
         this.netForceY = 0;
     }
 
