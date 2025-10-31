@@ -41,15 +41,15 @@ public class CalculationBody {
                     break;
             }
 
-
+            scanner.nextLine();
             do {
                 System.out.println("Do you wish to proceed?");
                 String proceed = scanner.nextLine();
-                if (proceed.toLowerCase().contains("no")) {
+                if (proceed.toLowerCase().startsWith("no")) {
                     stopProgram = true;
                     validAnswer = true;
                     System.out.println(randomMessageGenerator());
-                } else if (proceed.startsWith("y")) {
+                } else if (proceed.toLowerCase().startsWith("y")) {
                     System.out.println("You are continuing. Hooray!!");
                     validAnswer = true;
                 } else {
@@ -77,6 +77,7 @@ public class CalculationBody {
         System.out.print("Choice: ");
         int presetChoice = scanner.nextInt();
         System.out.println("------------------------------------------------");
+
         if (presetChoice == 1) {
             Body sun = new Body("Sun",massOfSun, 0, 0, 0, 0); // initial velocity y for earth is the average speed is 29,780 is m/s
             Body earth = new Body("Earth", massOfEarth, 1.496e11, 0, 0, 29780); // initial x is the average distance from the earth to the sun, which is an astronomical unit (AU)
@@ -84,7 +85,7 @@ public class CalculationBody {
             celestialBodies.add(sun);
             celestialBodies.add(earth);
 
-            CalculationEngine.calculateNBodyProblem(celestialBodies, 60, 3600);
+            CalculationEngine.calculateNBodyProblem(celestialBodies, 60, 31_536_000);
 
         } else if (presetChoice == 2) {
             Body sun = new Body("Sun",massOfSun, 0, 0, 0, 0);
@@ -95,7 +96,7 @@ public class CalculationBody {
             celestialBodies.add(earth);
             celestialBodies.add(mars);
 
-            CalculationEngine.calculateNBodyProblem(celestialBodies, 60, 3600);
+            CalculationEngine.calculateNBodyProblem(celestialBodies, 60, 31_536_000);
 
         } else if (presetChoice == 3) {
             System.out.print("Enter the number of bodies (N): ");
@@ -104,6 +105,7 @@ public class CalculationBody {
             System.out.print("Enter the simulation time step (Δt): "); // delta t, this determines how much time in seconds that the program should move after each loop
             double timeStep = scanner.nextDouble();
 
+            System.out.println("How long would you like to run the simulation for");
             System.out.print("Enter the total simulation duration in seconds (S): ");
             int totalTime = scanner.nextInt();
             scanner.nextLine(); // added this to fix the input buffer consuming the newline character added when doing next int, cause it was breaking body name input section

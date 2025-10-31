@@ -19,13 +19,12 @@ public class CalculationEngine {
     // of the class that holds it
     public static void calculateNBodyProblem(ArrayList<Body> celestialBodies, double timeStep, int totalDuration) {
 
-
         // time loop for each iteration of the simulation
         for (double t = 0; t < totalDuration; t += timeStep) {
             for (Body body : celestialBodies) {
                 body.resetForce();
             }
-            int printFrequency = 100;
+
             for (int i = 0; i < celestialBodies.size(); i++) {
                 for (int j = i + 1; j < celestialBodies.size(); j++) { // adding one ensures that when running the simulation we don't calculate the same pair twice, so e.g A = B
 
@@ -41,18 +40,19 @@ public class CalculationEngine {
                 body.updatePositionAndVelocityA(timeStep);
             }
 
+            int printFrequency = 100;
             if (t == 0 || (t / timeStep) % printFrequency == 0) {
                 System.out.printf("--- Time: %.0f s --- \n", t);
-                for (int i = 0; i < celestialBodies.size(); i++)  {
-                    Body currentBody = celestialBodies.get(i);
-                    System.out.printf("Body %d Position:\n", i);
-                    System.out.printf("    X: %.4e\n", currentBody.positionX); // .4e only prints out to 4 decimal places but still using the e notation for powers of 10
+                for (Body currentBody : celestialBodies) {
+                    System.out.printf("  %s Position:\n", currentBody.name);
+                    System.out.printf("    X: %.4e\n", currentBody.positionX);
                     System.out.printf("    Y: %.4e\n", currentBody.positionY);
                 }
                 System.out.println("---------------------");
 
             }
         }
+
 
     }
 
