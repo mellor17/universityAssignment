@@ -42,13 +42,19 @@ public class CalculationEngine {
 
             int printFrequency = 100;
             if (t == 0 || (t / timeStep) % printFrequency == 0) {
-                System.out.printf("--- Time: %.0f s --- \n", t);
+                System.out.printf("\u001B[35m" + "--- Time: %.0f s --- \n", t);
                 for (Body currentBody : celestialBodies) {
                     System.out.printf("  %s Position:\n", currentBody.name);
                     System.out.printf("    X: %.4e\n", currentBody.positionX);
                     System.out.printf("    Y: %.4e\n", currentBody.positionY);
                 }
                 System.out.println("---------------------");
+
+                try {
+                    Thread.sleep(500); // this is used to slow down the output of the application in the console so the user can see what the output is
+                } catch (InterruptedException exception) {
+                    exception.printStackTrace(); // this is required by the sleep method
+                }
 
             }
         }
