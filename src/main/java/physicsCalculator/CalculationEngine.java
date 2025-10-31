@@ -19,8 +19,6 @@ public class CalculationEngine {
     // of the class that holds it
     public static void calculateNBodyProblem(ArrayList<Body> celestialBodies, double timeStep, int totalDuration) {
 
-
-
         // time loop for each iteration of the simulation
         for (double t = 0; t < totalDuration; t += timeStep) {
             for (Body body : celestialBodies) {
@@ -34,15 +32,27 @@ public class CalculationEngine {
                     Body bodyB = celestialBodies.get(j);
 
                     calculateForcesAndApplyValues(bodyA, bodyB);
-                    System.out.println("Time: " + t + "s\n");
-                    System.out.println("Position: \n " + "X: "+ celestialBodies.get(1).positionX + "\n Y: " + celestialBodies.get(1).positionY);
+
                 }
             }
 
             for (Body body : celestialBodies) {
                 body.updatePositionAndVelocityA(timeStep);
             }
+
+            int printFrequency = 100;
+            if (t == 0 || (t / timeStep) % printFrequency == 0) {
+                System.out.printf("--- Time: %.0f s --- \n", t);
+                for (Body currentBody : celestialBodies) {
+                    System.out.printf("  %s Position:\n", currentBody.name);
+                    System.out.printf("    X: %.4e\n", currentBody.positionX);
+                    System.out.printf("    Y: %.4e\n", currentBody.positionY);
+                }
+                System.out.println("---------------------");
+
+            }
         }
+
 
     }
 
@@ -62,6 +72,8 @@ public class CalculationEngine {
         // we just know that the force for body B will directly opposite to A
 
     }
+
+
 
 
 

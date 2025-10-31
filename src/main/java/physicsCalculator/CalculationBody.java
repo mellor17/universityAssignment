@@ -3,7 +3,7 @@ package physicsCalculator;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-public class GatherData {
+public class CalculationBody {
     private static final Scanner scanner = new Scanner(System.in);
     static final double massOfSun = 1.989e30;
     static final double massOfEarth = 5.972e24;
@@ -22,6 +22,7 @@ public class GatherData {
             System.out.println("------------------------------------------------");
             System.out.println("Please choose a calculation from the following numbers(1-4):\n Option 1: N-Body Gravitational Simulator  \n Option 2: Rocket Trajectory Simulator \n Option 3: Not yet implemented \n Option 4: Not yet implemented");
             System.out.println("------------------------------------------------");
+            System.out.print("Choice: ");
             int option = scanner.nextInt();
             scanner.nextLine();
 
@@ -40,15 +41,15 @@ public class GatherData {
                     break;
             }
 
-
+            scanner.nextLine();
             do {
                 System.out.println("Do you wish to proceed?");
                 String proceed = scanner.nextLine();
-                if (proceed.toLowerCase().contains("no")) {
+                if (proceed.toLowerCase().startsWith("no")) {
                     stopProgram = true;
                     validAnswer = true;
                     System.out.println(randomMessageGenerator());
-                } else if (proceed.startsWith("y")) {
+                } else if (proceed.toLowerCase().startsWith("y")) {
                     System.out.println("You are continuing. Hooray!!");
                     validAnswer = true;
                 } else {
@@ -65,22 +66,38 @@ public class GatherData {
     private static void nBodyProblem() {
         System.out.println("The N-body problem, in celestial mechanics, is predicting the motions of any number of masses (N) under mutual gravitational attraction, given their initial positions, velocities, and masses.");
         System.out.println("""
-        Select a simulation, or choose your own:");
-        1: Sun and Earth (Two-body)
-        2: Sun, Earth, and Mars (Three-body)
-        3: Choose your own simulation. (N-body)
-        """);
+                Select a simulation, or choose your own:");
+                1: Sun and Earth (Two-body)
+                2: Sun, Earth, and Mars (Three-body)
+                3: Choose your own simulation. (N-body)
+                """);
 
         // this line creates a new array list which can only hold the body object which has been defined in our body class
         ArrayList<Body> celestialBodies = new ArrayList<>();
-
+        System.out.print("Choice: ");
         int presetChoice = scanner.nextInt();
-        if (presetChoice == 1) {
-            Body sun = new Body(massOfSun, 0, 0, 0, 0); // initial velocity y for earth is the average speed is 29,780 is m/s
-            Body earth = new Body(massOfEarth, 1.496e11, 0, 0, 29780); // initial x is the average distance from the earth to the sun, which is an astronomical unit (AU)
-            celestialBodies.add(sun); celestialBodies.add(earth);
+        System.out.println("------------------------------------------------");
 
-            CalculationEngine.calculateNBodyProblem(celestialBodies, 60, 3600);
+        if (presetChoice == 1) {
+            Body sun = new Body("Sun",massOfSun, 0, 0, 0, 0); // initial velocity y for earth is the average speed is 29,780 is m/s
+            Body earth = new Body("Earth", massOfEarth, 1.496e11, 0, 0, 29780); // initial x is the average distance from the earth to the sun, which is an astronomical unit (AU)
+
+            celestialBodies.add(sun);
+            celestialBodies.add(earth);
+
+            CalculationEngine.calculateNBodyProblem(celestialBodies, 60, 31_536_000);
+
+        } else if (presetChoice == 2) {
+            Body sun = new Body("Sun",massOfSun, 0, 0, 0, 0);
+            Body earth = new Body("Earth",massOfEarth, 1.496e11, 0, 0, 29780);
+            Body mars = new Body("Mars" ,massOfMars, 2.279e11, 0, 0, 24070);
+
+            celestialBodies.add(sun);
+            celestialBodies.add(earth);
+            celestialBodies.add(mars);
+
+            CalculationEngine.calculateNBodyProblem(celestialBodies, 60, 31_536_000);
+
         } else if (presetChoice == 3) {
             System.out.print("Enter the number of bodies (N): ");
             int numberOfBodies = scanner.nextInt();
@@ -88,15 +105,25 @@ public class GatherData {
             System.out.print("Enter the simulation time step (Δt): "); // delta t, this determines how much time in seconds that the program should move after each loop
             double timeStep = scanner.nextDouble();
 
+            System.out.println("How long would you like to run the simulation for");
             System.out.print("Enter the total simulation duration in seconds (S): ");
             int totalTime = scanner.nextInt();
-
-
-
+            scanner.nextLine(); // added this to fix the input buffer consuming the newline character added when doing next int, cause it was breaking body name input section
+            System.out.println("---------------------");
             System.out.println("Enter data for each body:");
-
             for (int i = 0; i < numberOfBodies; i++) {
-                System.out.println("--- Body " + (i + 1) + " ---");
+
+                String bodyName = String.valueOf(i + 1); // this sets the name of the body just to the number if no name is specifced
+                System.out.println("Would you like to enter name for this body? (Y/N)");
+                String bodyHasNameResponse = scanner.nextLine();
+
+                if (bodyHasNameResponse.toLowerCase().contains("y")) {
+                    System.out.println("Enter a name for the Body: ");
+                    bodyName = scanner.nextLine();
+                }
+
+                System.out.println("--- Body: " + bodyName + " ---");
+
 
                 System.out.print("Mass (kg): ");
                 double mass = scanner.nextDouble();
@@ -113,9 +140,12 @@ public class GatherData {
                 System.out.print("Initial Y Velocity (m/s): ");
                 double velocityY = scanner.nextDouble();
 
-                celestialBodies.add(new Body(mass, positionX, positionY, velocityX, velocityY));
-                CalculationEngine.calculateNBodyProblem(celestialBodies, timeStep, totalTime);
+
+
+                celestialBodies.add(new Body(bodyName, mass, positionX, positionY, velocityX, velocityY));
+
             }
+            CalculationEngine.calculateNBodyProblem(celestialBodies, timeStep, totalTime);
         }
     }
 
