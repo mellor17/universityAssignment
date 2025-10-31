@@ -13,8 +13,8 @@ import java.util.Scanner;
  * */
 public class Main {
     public static void main(String[] args) {
-        private static final double massOfSun = 1.989e30;
-        private static final double massOfEarth = 5.972e24;
+        final double massOfSun = 1.989e30;
+        final double massOfEarth = 5.972e24;
         ArrayList<Body>
 
         GatherData.calculationOption();

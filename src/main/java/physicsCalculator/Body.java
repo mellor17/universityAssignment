@@ -1,5 +1,7 @@
 package physicsCalculator;
 
+
+
 public class Body {
 
     // this declares the variable we need to use in the N-body formula
@@ -7,7 +9,6 @@ public class Body {
     double positionX, positionY;
     double velocityX, velocityY;
     double netForceX, netForceY;
-
 
     /**
      * This is a constructor this uses the variables in the class to create a new object
@@ -24,7 +25,7 @@ public class Body {
     }
 
     public void resetForce() {
-        this.netForceX = 0; //used to set force back
+        this.netForceX = 0; //used to set force back to zero on each iteration of the loop so we get accurate calculation
         this.netForceY = 0;
     }
 
@@ -34,7 +35,7 @@ public class Body {
     }
 
 //
-//    public double getAcceleration() {
+//    public double getAcceleration() { // removed this as I thought it added unnecessary complexity, works better just in the method
 //        double accelerationX = this.netForceX / this.mass;
 //        double accelerationY = this.netForceY / this.mass;
 //        return accelerationX,return accelerationY;
