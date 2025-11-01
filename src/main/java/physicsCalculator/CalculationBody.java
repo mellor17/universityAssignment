@@ -40,8 +40,8 @@ public class CalculationBody {
         System.out.println("------------------------------------------------");
 
         if (presetChoice == 1) {
-            Body sun = new Body("Sun",massOfSun, 0, 0, 0, 0); // initial velocity y for earth is the average speed is 29,780 is m/s
-            Body earth = new Body("Earth", massOfEarth, 1.496e11, 0, 0, 29780); // initial x is the average distance from the earth to the sun, which is an astronomical unit (AU)
+            Body sun = new Body("Sun",massOfSun, 0, 0, 0, 0,0, 0    ); // initial velocity y for earth is the average speed is 29,780 is m/s
+            Body earth = new Body("Earth", massOfEarth, 1.496e11, 0, 0, 29780,0, 0); // initial x is the average distance from the earth to the sun, which is an astronomical unit (AU)
 
             celestialBodies.add(sun);
             celestialBodies.add(earth);
@@ -49,9 +49,9 @@ public class CalculationBody {
             CalculationEngine.calculateNBodyProblem(celestialBodies, 60, 31_536_000);
 
         } else if (presetChoice == 2) {
-            Body sun = new Body("Sun",massOfSun, 0, 0, 0, 0);
-            Body earth = new Body("Earth",massOfEarth, 1.496e11, 0, 0, 29780);
-            Body mars = new Body("Mars" ,massOfMars, 2.279e11, 0, 0, 24070);
+            Body sun = new Body("Sun",massOfSun, 0, 0, 0, 0, 0, 0 );
+            Body earth = new Body("Earth",massOfEarth, 1.496e11, 0, 0, 29780, 0, 0);
+            Body mars = new Body("Mars" ,massOfMars, 2.279e11, 0, 0, 24070, 0, 0);
 
             celestialBodies.add(sun);
             celestialBodies.add(earth);
@@ -70,11 +70,15 @@ public class CalculationBody {
                 Select a simulation time, or choose your own:");
                 1: 1 Year
                 2: 6 Months
-                3: Choose your own simulation.
+                3: 10 Years
+                4: 5 Years
+                5: 1 Month
+                6: Choose your own simulation time.
                 """);
-            double totalTime = 0;
-
+            double totalTime;
+            System.out.print("Choice: ");
             int simulationTimeResponse = scanner.nextInt();
+
 
             switch (simulationTimeResponse) {
                 case 1:
@@ -91,6 +95,7 @@ public class CalculationBody {
                     break;
                 case 5:
                     totalTime = oneMonthInSeconds;
+                    break;
                 default:
                     System.out.print("Enter the total simulation duration in seconds (S): ");
                     totalTime = scanner.nextInt();
@@ -124,15 +129,21 @@ public class CalculationBody {
                 System.out.print("Initial Y Position (m): ");
                 double positionY = scanner.nextDouble();
 
+                System.out.print("Initial Z Position (m): ");
+                double positionZ = scanner.nextDouble();
+
                 System.out.print("Initial X Velocity (m/s): ");
                 double velocityX = scanner.nextDouble();
 
                 System.out.print("Initial Y Velocity (m/s): ");
                 double velocityY = scanner.nextDouble();
 
+                System.out.print("Initial Z Velocity (m/s): ");
+                double velocityZ = scanner.nextDouble();
+                scanner.nextLine();
 
 
-                celestialBodies.add(new Body(bodyName, mass, positionX, positionY, velocityX, velocityY));
+                celestialBodies.add(new Body(bodyName, mass, positionX, positionY, velocityX, velocityY, positionZ, velocityZ));
 
             }
             CalculationEngine.calculateNBodyProblem(celestialBodies, timeStep, totalTime);
