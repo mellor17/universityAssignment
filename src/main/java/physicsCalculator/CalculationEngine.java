@@ -17,7 +17,7 @@ public class CalculationEngine {
 
     // static just means that the objects or items within that scope are accessible without needing to instantiate a new instance
     // of the class that holds it
-    public static void calculateNBodyProblem(ArrayList<Body> celestialBodies, double timeStep, int totalDuration) {
+    public static void calculateNBodyProblem(ArrayList<Body> celestialBodies, double timeStep, double totalDuration) {
 
         // time loop for each iteration of the simulation
         for (double t = 0; t < totalDuration; t += timeStep) {
@@ -42,13 +42,21 @@ public class CalculationEngine {
 
             int printFrequency = 100;
             if (t == 0 || (t / timeStep) % printFrequency == 0) {
-                System.out.printf("--- Time: %.0f s --- \n", t);
+                System.out.printf("\u001B[35m" + "--- Time: %.0f s --- \n", t);
                 for (Body currentBody : celestialBodies) {
                     System.out.printf("  %s Position:\n", currentBody.name);
                     System.out.printf("    X: %.4e\n", currentBody.positionX);
                     System.out.printf("    Y: %.4e\n", currentBody.positionY);
+                    System.out.printf("    Z: %.4e\n", currentBody.positionZ);
+
                 }
                 System.out.println("---------------------");
+
+                try {
+                    Thread.sleep(500); // this is used to slow down the output of the application in the console so the user can see what the output is
+                } catch (InterruptedException exception) {
+                    exception.printStackTrace(); // this is required by the sleep method
+                }
 
             }
         }
@@ -61,14 +69,18 @@ public class CalculationEngine {
 
         double distanceX = bodyB.positionX - bodyA.positionX;
         double distanceY = bodyB.positionY - bodyA.positionY;
-        double totalDistance = Math.sqrt((distanceX * distanceX) + (distanceY * distanceY)); // r in our formula total distace
+        double distanceZ = bodyB.positionZ - bodyA.positionZ;
+        double totalDistance = Math.sqrt((distanceX * distanceX) + (distanceY * distanceY) + (distanceZ * distanceZ)); // r in our formula total distace
+
         double magnitudeOfForce = gravitationalConstant * (bodyA.mass * bodyB.mass) / Math.pow(totalDistance, 2);
-        // This calculates the force for Body A, to find the force for bodyB is just the opposite, so negative forceX & Y
+
+        // This calculates the force for Body A, to find the force for bodyB is just the opposite, so negative force X, Y & Z
         double forceX = magnitudeOfForce * (distanceX / totalDistance);
         double forceY = magnitudeOfForce * (distanceY / totalDistance);
+        double forceZ = magnitudeOfForce * (distanceZ / totalDistance);
 
-        bodyA.updateNetForce(forceX, forceY);
-        bodyB.updateNetForce(-forceX, -forceY); // this saves code and time because we now don't have to calculate the force for the other bod
+        bodyA.updateNetForce(forceX, forceY, forceZ);
+        bodyB.updateNetForce(-forceX, -forceY, -forceZ); // this saves code and time because we now don't have to calculate the force for the other bod
         // we just know that the force for body B will directly opposite to A
 
     }
