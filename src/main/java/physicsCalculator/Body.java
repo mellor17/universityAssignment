@@ -1,8 +1,5 @@
 package physicsCalculator;
 
-
-
-
 public class Body {
 
     // this declares the variables we need to use in the N-body formula
@@ -31,15 +28,15 @@ public class Body {
     }
 
     public void resetForce() {
-        this.netForceX = 0; //used to set force back to zero on each iteration of the loop so we get accurate calculation because if not then the whole thing blows up :o
-        this.netForceY = 0;
-        this.netForceZ = 0;
+        netForceX = 0; //used to set force back to zero on each iteration of the loop so we get accurate calculation because if not then the whole thing blows up :o
+        netForceY = 0;
+        netForceZ = 0;
     }
 
     public void updateNetForce(double forceX, double forceY, double forceZ) {
-        this.netForceX += forceX;
-        this.netForceY += forceY;
-        this.netForceZ += forceZ;
+        netForceX += forceX;
+        netForceY += forceY;
+        netForceZ += forceZ;
     }
 
 //
@@ -49,10 +46,11 @@ public class Body {
 //        return accelerationX,return accelerationY;
 //    }
 
+
     public void updatePositionAndVelocityA(double timeStep) {
 
-        double accelerationX = this.netForceX / this.mass; // acceleration is calculated as force/mass - mass = kg, force = N, acceleration is m/s^2
-        double accelerationY = this.netForceY / this.mass; // this is newton's second law of motion F = ma or force = mass multiplied by acceleration
+        double accelerationX = netForceX / mass; // acceleration is calculated as force/mass - mass = kg, force = N, acceleration is m/s^2
+        double accelerationY = netForceY / mass; // this is newton's second law of motion F = ma or force = mass multiplied by acceleration
         double accelerationZ = this.netForceZ / this.mass;
 
         this.velocityX += accelerationX * timeStep;

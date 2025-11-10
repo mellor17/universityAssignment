@@ -10,7 +10,7 @@ public class CalculationBody {
     static final double massOfSun = 1.989e30;
     static final double massOfEarth = 5.972e24;
     static final double massOfMars = 6.39e23;
-    static final double yearInSeconds = 31_536_000;
+    static final double yearInSeconds = 31_536_000; // note, you can use underscores to separate multiple digit numbers although these can be put anywhere as java ignores them
     static final double tenYearsInSeconds = yearInSeconds * 10;
     static final double fiveYearsInSeconds = yearInSeconds * 5;
     static final double sixMonthsInSeconds = yearInSeconds / 2;
@@ -46,7 +46,7 @@ public class CalculationBody {
             celestialBodies.add(sun);
             celestialBodies.add(earth);
 
-            CalculationEngine.calculateNBodyProblem(celestialBodies, 60, 31_536_000);
+            CalculationEngine.calculateNBodyProblem(celestialBodies, 60, 31_536_000, false);
 
         } else if (presetChoice == 2) {
             Body sun = new Body("Sun",massOfSun, 0, 0, 0, 0, 0, 0 );
@@ -56,8 +56,7 @@ public class CalculationBody {
             celestialBodies.add(sun);
             celestialBodies.add(earth);
             celestialBodies.add(mars);
-
-            CalculationEngine.calculateNBodyProblem(celestialBodies, 60, 31_536_000);
+            CalculationEngine.calculateNBodyProblem(celestialBodies, 60, 31_536_000, false);
 
         } else if (presetChoice == 3) {
             System.out.print("Enter the number of bodies (N): ");
@@ -146,7 +145,7 @@ public class CalculationBody {
                 celestialBodies.add(new Body(bodyName, mass, positionX, positionY, velocityX, velocityY, positionZ, velocityZ));
 
             }
-            CalculationEngine.calculateNBodyProblem(celestialBodies, timeStep, totalTime);
+            CalculationEngine.calculateNBodyProblem(celestialBodies, timeStep, totalTime, false);
         }
     }
 
