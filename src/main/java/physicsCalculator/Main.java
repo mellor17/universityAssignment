@@ -9,6 +9,8 @@ package physicsCalculator;
 
 public class Main {
     public static void main(String[] args) {
+
+
             boolean stopProgram = false;
             boolean validAnswer = false;
             System.out.println("Welcome to Ben's Physics Calculator. Before we start, let's collect some data for the calculation.");

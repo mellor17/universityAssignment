@@ -1,6 +1,5 @@
 package physicsCalculator;
 
-import java.util.Scanner;
 import java.util.ArrayList;
 
 import static physicsCalculator.InputUtility.scanner;
@@ -10,7 +9,7 @@ public class CalculationBody {
     static final double massOfSun = 1.989e30;
     static final double massOfEarth = 5.972e24;
     static final double massOfMars = 6.39e23;
-    static final double yearInSeconds = 31_536_000;
+    static final double yearInSeconds = 31_536_000; // note, you can use underscores to separate multiple digit numbers although these can be put anywhere as java ignores them
     static final double tenYearsInSeconds = yearInSeconds * 10;
     static final double fiveYearsInSeconds = yearInSeconds * 5;
     static final double sixMonthsInSeconds = yearInSeconds / 2;
@@ -40,24 +39,23 @@ public class CalculationBody {
         System.out.println("------------------------------------------------");
 
         if (presetChoice == 1) {
-            Body sun = new Body("Sun",massOfSun, 0, 0, 0, 0,0, 0    ); // initial velocity y for earth is the average speed is 29,780 is m/s
-            Body earth = new Body("Earth", massOfEarth, 1.496e11, 0, 0, 29780,0, 0); // initial x is the average distance from the earth to the sun, which is an astronomical unit (AU)
+            Body sun = new Body("Sun",massOfSun, 0, 0, 0, 0, 0, 0    ); // initial velocity y for earth is the average speed is 29,780 is m/s
+            Body earth = new Body("Earth", massOfEarth, 1.496e11, 0, 0, 0, 29780, 0); // initial x is the average distance from the earth to the sun, which is an astronomical unit (AU)
 
             celestialBodies.add(sun);
             celestialBodies.add(earth);
 
-            CalculationEngine.calculateNBodyProblem(celestialBodies, 60, 31_536_000);
+            CalculationEngine.calculateNBodyProblem(celestialBodies, 60, 31_536_000, false);
 
         } else if (presetChoice == 2) {
             Body sun = new Body("Sun",massOfSun, 0, 0, 0, 0, 0, 0 );
-            Body earth = new Body("Earth",massOfEarth, 1.496e11, 0, 0, 29780, 0, 0);
-            Body mars = new Body("Mars" ,massOfMars, 2.279e11, 0, 0, 24070, 0, 0);
+            Body earth = new Body("Earth",massOfEarth, 1.496e11, 0, 0, 0, 29780, 0);
+            Body mars = new Body("Mars" ,massOfMars, 2.279e11, 0, 0, 0, 24070, 0);
 
             celestialBodies.add(sun);
             celestialBodies.add(earth);
             celestialBodies.add(mars);
-
-            CalculationEngine.calculateNBodyProblem(celestialBodies, 60, 31_536_000);
+            CalculationEngine.calculateNBodyProblem(celestialBodies, 60, 31_536_000, false);
 
         } else if (presetChoice == 3) {
             System.out.print("Enter the number of bodies (N): ");
@@ -143,10 +141,10 @@ public class CalculationBody {
                 scanner.nextLine();
 
 
-                celestialBodies.add(new Body(bodyName, mass, positionX, positionY, velocityX, velocityY, positionZ, velocityZ));
+                celestialBodies.add(new Body(bodyName, mass, positionX, positionY, positionZ, velocityX, velocityY, velocityZ));
 
             }
-            CalculationEngine.calculateNBodyProblem(celestialBodies, timeStep, totalTime);
+            CalculationEngine.calculateNBodyProblem(celestialBodies, timeStep, totalTime, false);
         }
     }
 
