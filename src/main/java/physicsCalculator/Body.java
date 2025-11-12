@@ -13,7 +13,7 @@ public class Body {
      * This is a constructor this uses the variables in the class to create a new object that can be used across our programme
      *  I also added Z in after making the initial program so that is why it is at the end.
      * */
-    public Body(String name, double initial_mass, double initial_x, double initial_y, double initial_vx, double initial_vy, double initial_z, double initial_vz) {
+    public Body(String name, double initial_mass, double initial_x, double initial_y, double initial_z, double initial_vx, double initial_vy,  double initial_vz) {
         this.name = name;
         this.mass = initial_mass;
         this.positionX = initial_x;

@@ -32,6 +32,7 @@ public class CalculationEngine {
             for (Body body : celestialBodies) {
                 body.updatePositionAndVelocityA(timeStep);
             }
+
             if (!isTesting) {
                 int printFrequency = 100;
                 if (t == 0 || (t / timeStep) % printFrequency == 0) {
@@ -46,15 +47,13 @@ public class CalculationEngine {
                     System.out.println("---------------------");
                 }
 
-                    try {
-                        Thread.sleep(500); // this is used to slow down the output of the application in the console so the user can see what the output is
-                    } catch (InterruptedException exception) {
-                        exception.printStackTrace(); // this is required by the sleep method if you look at the method inforamtion
-                    }
+                try {
+                    Thread.sleep(500); // this is used to slow down the output of the application in the console so the user can see what the output is
+                } catch (InterruptedException exception) {
+                    exception.printStackTrace(); // this is required by the sleep method if you look at the method inforamtion
                 }
             }
         }
-
     }
 
 
@@ -67,12 +66,11 @@ public class CalculationEngine {
 
     }
 
-    public static double calculateTotalKineticEnergy(ArrayList<Body> bodies)
-    {
+    public static double calculateTotalKineticEnergy(ArrayList<Body> bodies) {
 
         double totalKineticEnergy = 0;
 
-        for (Body body: bodies) {
+        for (Body body : bodies) {
 
             double bodySpeedSquared = (Math.pow(body.velocityX, 2)) + (Math.pow(body.velocityY, 2)) + (Math.pow(body.velocityZ, 2));
 
@@ -123,11 +121,12 @@ public class CalculationEngine {
         double distanceZ = bodyB.positionZ - bodyA.positionZ;
         double totalDistance = getTotalDistance(bodyB, bodyA); // r in our formula total distace
 
-        if (totalDistance == 0) return; // this stops us dividing by zero which can be catastrophic for a program i think}
+        if (totalDistance == 0)
+            return; // this stops us dividing by zero which can be catastrophic for a program i think}
         double magnitudeOfForce = gravitationalConstant * (bodyA.mass * bodyB.mass) / Math.pow(totalDistance, 2);
 
 
-            // This calculates the force for Body A, to find the force for bodyB is just the opposite, so negative force X, Y & Z
+        // This calculates the force for Body A, to find the force for bodyB is just the opposite, so negative force X, Y & Z
         double forceX = magnitudeOfForce * (distanceX / totalDistance);
         double forceY = magnitudeOfForce * (distanceY / totalDistance);
         double forceZ = magnitudeOfForce * (distanceZ / totalDistance);
@@ -137,13 +136,20 @@ public class CalculationEngine {
         // we just know that the force for body B will directly opposite to A
 
 
-
-
     }
 
 
-    public static double calculateGravitionalForce () {
+    public static double calculateGravitionalForce(Body bodyA, Body bodyB) {
+        double totalDistance = getTotalDistance(bodyB, bodyA);
+        double gravitionalForce = gravitationalConstant  * (bodyA.mass * bodyB.mass) / Math.pow(2, totalDistance);
         return 0;
-
     }
+
+    public static double calculateCentripetalForce(Body bodyA, Body bodyB) {
+        double totalDistance = getTotalDistance(bodyB, bodyA);
+        double centripetalForce = 0;
+        return centripetalForce;
+    }
+
+
 }

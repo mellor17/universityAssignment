@@ -1,6 +1,5 @@
 package physicsCalculator;
 
-import java.util.Scanner;
 import java.util.ArrayList;
 
 import static physicsCalculator.InputUtility.scanner;
@@ -40,8 +39,8 @@ public class CalculationBody {
         System.out.println("------------------------------------------------");
 
         if (presetChoice == 1) {
-            Body sun = new Body("Sun",massOfSun, 0, 0, 0, 0,0, 0    ); // initial velocity y for earth is the average speed is 29,780 is m/s
-            Body earth = new Body("Earth", massOfEarth, 1.496e11, 0, 0, 29780,0, 0); // initial x is the average distance from the earth to the sun, which is an astronomical unit (AU)
+            Body sun = new Body("Sun",massOfSun, 0, 0, 0, 0, 0, 0    ); // initial velocity y for earth is the average speed is 29,780 is m/s
+            Body earth = new Body("Earth", massOfEarth, 1.496e11, 0, 0, 0, 29780, 0); // initial x is the average distance from the earth to the sun, which is an astronomical unit (AU)
 
             celestialBodies.add(sun);
             celestialBodies.add(earth);
@@ -50,8 +49,8 @@ public class CalculationBody {
 
         } else if (presetChoice == 2) {
             Body sun = new Body("Sun",massOfSun, 0, 0, 0, 0, 0, 0 );
-            Body earth = new Body("Earth",massOfEarth, 1.496e11, 0, 0, 29780, 0, 0);
-            Body mars = new Body("Mars" ,massOfMars, 2.279e11, 0, 0, 24070, 0, 0);
+            Body earth = new Body("Earth",massOfEarth, 1.496e11, 0, 0, 0, 29780, 0);
+            Body mars = new Body("Mars" ,massOfMars, 2.279e11, 0, 0, 0, 24070, 0);
 
             celestialBodies.add(sun);
             celestialBodies.add(earth);
@@ -142,7 +141,7 @@ public class CalculationBody {
                 scanner.nextLine();
 
 
-                celestialBodies.add(new Body(bodyName, mass, positionX, positionY, velocityX, velocityY, positionZ, velocityZ));
+                celestialBodies.add(new Body(bodyName, mass, positionX, positionY, positionZ, velocityX, velocityY, velocityZ));
 
             }
             CalculationEngine.calculateNBodyProblem(celestialBodies, timeStep, totalTime, false);
