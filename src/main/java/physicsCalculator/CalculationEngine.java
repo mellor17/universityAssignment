@@ -89,6 +89,8 @@ public class  CalculationEngine {
                 Body bodyA = celestialBodies.get(i);
                 Body bodyB = celestialBodies.get(j);
 
+
+
                 double totalDistance = getTotalDistance(bodyB, bodyA);
 
                 if (totalDistance == 0) {
