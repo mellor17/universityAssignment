@@ -2,7 +2,7 @@ package physicsCalculator;
 
 import java.util.ArrayList;
 
-public class CalculationEngine {
+public class  CalculationEngine {
     // the letter e is used to denote the power of 10, so
     // mass of sun would be 1.989 x 10^30kg
     private static final double gravitationalConstant = 6.674e-11;
@@ -85,7 +85,7 @@ public class CalculationEngine {
         double totalPotentialEnergy = 0;
 
         for (int i = 0; i < celestialBodies.size(); i++) {
-            for (int j = 0; j < celestialBodies.size(); j++) {
+            for (int j = i  + 1 ; j < celestialBodies.size(); j++) {
                 Body bodyA = celestialBodies.get(i);
                 Body bodyB = celestialBodies.get(j);
 
@@ -94,6 +94,7 @@ public class CalculationEngine {
                 if (totalDistance == 0) {
                     continue; // skip if they are in the same spot so we can't have two bodies in the same position which can break things
                 } // also is not physically possible
+                // G is negative here because when two objects are coming together they lose potential energy,
                 double pairedPotentialEnergy = -gravitationalConstant * (bodyA.mass * bodyB.mass / totalDistance);
                 totalPotentialEnergy += pairedPotentialEnergy;
 
